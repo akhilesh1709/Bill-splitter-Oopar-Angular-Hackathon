@@ -1,26 +1,39 @@
-<div>
-    <h2>Bill Summary</h2>
-    <div>
-      <h3>Items:</h3>
-      <ul>
-        <li *ngFor="let item of billService.getBill().items">
-          {{item.name}} - {{item.quantity}} x {{item.price}} = {{item.quantity * item.price}}
+<div class="card">
+    <div class="card-header bg-info text-white">
+      <h3>Bill Summary</h3>
+    </div>
+    <div class="card-body">
+      <h4 class="mb-3">Items:</h4>
+      <ul class="list-group mb-4">
+        <li *ngFor="let item of billService.getBill().items" class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{item.name}}</strong>
+            <small class="text-muted"> ({{item.category}})</small>
+          </div>
+          <div>
+            <span class="me-2">{{item.quantity}} x {{item.price | currency:'INR'}}</span>
+            <span class="badge bg-primary rounded-pill">{{item.quantity * item.price | currency:'INR'}}</span>
+          </div>
         </li>
       </ul>
-      <p>Subtotal: {{billService.calculateTotal() | currency:'INR'}}</p>
-      <p>Tax: {{billService.calculateTax() | currency:'INR'}}</p>
-      <p>Service Charge: {{billService.calculateServiceCharge() | currency:'INR'}}</p>
-      <p>Grand Total: {{billService.calculateGrandTotal() | currency:'INR'}}</p>
-    </div>
+      <div class="alert alert-info">
+        <p class="mb-1"><strong>Subtotal:</strong> {{billService.calculateTotal() | currency:'INR'}}</p>
+        <p class="mb-1"><strong>Tax:</strong> {{billService.calculateTax() | currency:'INR'}}</p>
+        <p class="mb-1"><strong>Service Charge:</strong> {{billService.calculateServiceCharge() | currency:'INR'}}</p>
+        <p class="mb-0"><strong>Grand Total:</strong> {{billService.calculateGrandTotal() | currency:'INR'}}</p>
+      </div>
   
-    <div>
-      <h3>People:</h3>
-      <ul>
-        <li *ngFor="let person of billService.getBill().people">
-          {{person.name}} - {{billService.calculatePersonShare(person) | currency:'INR'}}
-          <ul>
-            <li *ngFor="let item of person.items">
-              {{item.name}} - {{item.quantity}} x {{item.price}}
+      <h4 class="mt-4 mb-3">People:</h4>
+      <ul class="list-group">
+        <li *ngFor="let person of billService.getBill().people" class="list-group-item">
+          <h5 class="d-flex justify-content-between align-items-center">
+            {{person.name}}
+            <span class="badge bg-success">{{billService.calculatePersonShare(person) | currency:'INR'}}</span>
+          </h5>
+          <ul class="list-group list-group-flush mt-2">
+            <li *ngFor="let item of person.items" class="list-group-item d-flex justify-content-between align-items-center">
+              <span>{{item.name}}</span>
+              <span>{{item.quantity}} x {{item.price | currency:'INR'}}</span>
             </li>
           </ul>
         </li>
