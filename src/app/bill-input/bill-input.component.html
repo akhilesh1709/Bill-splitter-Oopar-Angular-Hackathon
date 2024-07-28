@@ -20,9 +20,9 @@
           <button (click)="removeItemFromPerson(i)">Remove</button>
         </li>
       </ul>
-      <select (change)="addItemToPerson($event.target.value)">
+      <select (change)="addItemToPerson($event)">
         <option value="">Select an item</option>
-        <option *ngFor="let item of billService.getBill().items" [ngValue]="item">{{item.name}}</option>
+        <option *ngFor="let item of billService.getBill().items" [value]="item.name">{{item.name}}</option>
       </select>
       <button (click)="addPerson()">Add Person</button>
     </div>

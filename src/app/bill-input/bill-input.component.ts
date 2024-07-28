@@ -22,7 +22,7 @@ export class BillInputComponent {
 
   itemCategories = Object.values(ItemCategory);
 
-  constructor(private billService: BillService) {}
+  constructor(public billService: BillService) {}
 
   addItem() {
     this.billService.addItem({ ...this.newItem });
@@ -42,8 +42,12 @@ export class BillInputComponent {
     };
   }
 
-  addItemToPerson(item: BillItem) {
-    this.newPerson.items.push(item);
+  addItemToPerson(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    const selectedItem = this.billService.getBill().items.find(item => item.name === select.value);
+    if (selectedItem) {
+      this.newPerson.items.push(selectedItem);
+    }
   }
 
   removeItemFromPerson(index: number) {
