@@ -1,0 +1,29 @@
+<div>
+    <h2>Bill Summary</h2>
+    <div>
+      <h3>Items:</h3>
+      <ul>
+        <li *ngFor="let item of billService.getBill().items">
+          {{item.name}} - {{item.quantity}} x {{item.price}} = {{item.quantity * item.price}}
+        </li>
+      </ul>
+      <p>Subtotal: {{billService.calculateTotal() | currency:'INR'}}</p>
+      <p>Tax: {{billService.calculateTax() | currency:'INR'}}</p>
+      <p>Service Charge: {{billService.calculateServiceCharge() | currency:'INR'}}</p>
+      <p>Grand Total: {{billService.calculateGrandTotal() | currency:'INR'}}</p>
+    </div>
+  
+    <div>
+      <h3>People:</h3>
+      <ul>
+        <li *ngFor="let person of billService.getBill().people">
+          {{person.name}} - {{billService.calculatePersonShare(person) | currency:'INR'}}
+          <ul>
+            <li *ngFor="let item of person.items">
+              {{item.name}} - {{item.quantity}} x {{item.price}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>

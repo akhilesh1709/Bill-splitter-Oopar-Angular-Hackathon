@@ -1,0 +1,29 @@
+<div>
+    <h2>Add Items</h2>
+    <div>
+      <input [(ngModel)]="newItem.name" placeholder="Item name">
+      <input type="number" [(ngModel)]="newItem.quantity" placeholder="Quantity">
+      <input type="number" [(ngModel)]="newItem.price" placeholder="Price">
+      <select [(ngModel)]="newItem.category">
+        <option *ngFor="let category of itemCategories" [value]="category">{{category}}</option>
+      </select>
+      <button (click)="addItem()">Add Item</button>
+    </div>
+  
+    <h2>Add People</h2>
+    <div>
+      <input [(ngModel)]="newPerson.name" placeholder="Person name">
+      <h3>Items consumed:</h3>
+      <ul>
+        <li *ngFor="let item of newPerson.items; let i = index">
+          {{item.name}} - {{item.quantity}} x {{item.price}}
+          <button (click)="removeItemFromPerson(i)">Remove</button>
+        </li>
+      </ul>
+      <select (change)="addItemToPerson($event.target.value)">
+        <option value="">Select an item</option>
+        <option *ngFor="let item of billService.getBill().items" [ngValue]="item">{{item.name}}</option>
+      </select>
+      <button (click)="addPerson()">Add Person</button>
+    </div>
+  </div>
