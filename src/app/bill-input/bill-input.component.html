@@ -28,13 +28,22 @@
         <ul class="list-group mb-3">
           <li *ngFor="let item of newPerson.items; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
             {{item.name}} - {{item.quantity}} x {{item.price}}
-            <button class="btn btn-danger btn-sm" (click)="removeItemFromPerson(i)">Remove</button>
+            <div>
+              <input type="number" class="form-control form-control-sm d-inline-block mr-2" style="width: 60px;" 
+                     [(ngModel)]="item.quantity" (change)="updateItemQuantity(i, $event)">
+              <button class="btn btn-danger btn-sm" (click)="removeItemFromPerson(i)">Remove</button>
+            </div>
           </li>
         </ul>
-        <select class="form-control mb-3" (change)="addItemToPerson($event)">
-          <option value="">Select an item</option>
-          <option *ngFor="let item of billService.getBill().items" [value]="item.name">{{item.name}}</option>
-        </select>
+        <div class="input-group mb-3">
+          <select class="form-control" (change)="addItemToPerson($event)">
+            <option value="">Select an item</option>
+            <option *ngFor="let item of billService.getBill().items" [value]="item.name">{{item.name}}</option>
+          </select>
+          <div class="input-group-append">
+            <input type="number" class="form-control" [(ngModel)]="newItemQuantity" placeholder="Quantity" style="width: 80px;">
+          </div>
+        </div>
         <button class="btn btn-primary btn-block" (click)="addPerson()">Add Person</button>
       </div>
     </div>
