@@ -1,29 +1,41 @@
-<div>
-    <h2>Add Items</h2>
-    <div>
-      <input [(ngModel)]="newItem.name" placeholder="Item name">
-      <input type="number" [(ngModel)]="newItem.quantity" placeholder="Quantity">
-      <input type="number" [(ngModel)]="newItem.price" placeholder="Price">
-      <select [(ngModel)]="newItem.category">
-        <option *ngFor="let category of itemCategories" [value]="category">{{category}}</option>
-      </select>
-      <button (click)="addItem()">Add Item</button>
-    </div>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h2 class="card-title text-primary mb-4">Add Items</h2>
+      <div class="mb-4">
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <input class="form-control" [(ngModel)]="newItem.name" placeholder="Item name">
+          </div>
+          <div class="form-group col-md-3">
+            <input type="number" class="form-control" [(ngModel)]="newItem.quantity" placeholder="Quantity">
+          </div>
+          <div class="form-group col-md-3">
+            <input type="number" class="form-control" [(ngModel)]="newItem.price" placeholder="Price">
+          </div>
+          <div class="form-group col-md-3">
+            <select class="form-control" [(ngModel)]="newItem.category">
+              <option *ngFor="let category of itemCategories" [value]="category">{{category}}</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" (click)="addItem()">Add Item</button>
+      </div>
   
-    <h2>Add People</h2>
-    <div>
-      <input [(ngModel)]="newPerson.name" placeholder="Person name">
-      <h3>Items consumed:</h3>
-      <ul>
-        <li *ngFor="let item of newPerson.items; let i = index">
-          {{item.name}} - {{item.quantity}} x {{item.price}}
-          <button (click)="removeItemFromPerson(i)">Remove</button>
-        </li>
-      </ul>
-      <select (change)="addItemToPerson($event)">
-        <option value="">Select an item</option>
-        <option *ngFor="let item of billService.getBill().items" [value]="item.name">{{item.name}}</option>
-      </select>
-      <button (click)="addPerson()">Add Person</button>
+      <h2 class="card-title text-primary mb-4">Add People</h2>
+      <div>
+        <input class="form-control mb-3" [(ngModel)]="newPerson.name" placeholder="Person name">
+        <h3 class="h5 mb-3">Items consumed:</h3>
+        <ul class="list-group mb-3">
+          <li *ngFor="let item of newPerson.items; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+            {{item.name}} - {{item.quantity}} x {{item.price}}
+            <button class="btn btn-danger btn-sm" (click)="removeItemFromPerson(i)">Remove</button>
+          </li>
+        </ul>
+        <select class="form-control mb-3" (change)="addItemToPerson($event)">
+          <option value="">Select an item</option>
+          <option *ngFor="let item of billService.getBill().items" [value]="item.name">{{item.name}}</option>
+        </select>
+        <button class="btn btn-primary btn-block" (click)="addPerson()">Add Person</button>
+      </div>
     </div>
   </div>
