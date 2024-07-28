@@ -1,70 +1,29 @@
-<div class="card mb-4">
-    <div class="card-header bg-primary text-white">
-      <h3>Add Items</h3>
+<div>
+    <h2>Add Items</h2>
+    <div>
+      <input [(ngModel)]="newItem.name" placeholder="Item name">
+      <input type="number" [(ngModel)]="newItem.quantity" placeholder="Quantity">
+      <input type="number" [(ngModel)]="newItem.price" placeholder="Price">
+      <select [(ngModel)]="newItem.category">
+        <option *ngFor="let category of itemCategories" [value]="category">{{category}}</option>
+      </select>
+      <button (click)="addItem()">Add Item</button>
     </div>
-    <div class="card-body">
-      <form (ngSubmit)="addItem()" #itemForm="ngForm">
-        <div class="row g-3">
-          <div class="col-sm-6">
-            <input [(ngModel)]="newItem.name" name="itemName" class="form-control" placeholder="Item name" required>
-          </div>
-          <div class="col-sm-6">
-            <input type="number" [(ngModel)]="newItem.quantity" name="itemQuantity" class="form-control" placeholder="Quantity" required>
-          </div>
-          <div class="col-sm-6">
-            <input type="number" [(ngModel)]="newItem.price" name="itemPrice" class="form-control" placeholder="Price" required>
-          </div>
-          <div class="col-sm-6">
-            <select [(ngModel)]="newItem.category" name="itemCategory" class="form-select">
-              <option *ngFor="let category of itemCategories" [value]="category">{{category}}</option>
-            </select>
-          </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary w-100" [disabled]="!itemForm.form.valid">Add Item</button>
-          </div>
-        </div>
-      </form>
+  
+    <h2>Add People</h2>
+    <div>
+      <input [(ngModel)]="newPerson.name" placeholder="Person name">
+      <h3>Items consumed:</h3>
+      <ul>
+        <li *ngFor="let item of newPerson.items; let i = index">
+          {{item.name}} - {{item.quantity}} x {{item.price}}
+          <button (click)="removeItemFromPerson(i)">Remove</button>
+        </li>
+      </ul>
+      <select (change)="addItemToPerson($event)">
+        <option value="">Select an item</option>
+        <option *ngFor="let item of billService.getBill().items" [value]="item.name">{{item.name}}</option>
+      </select>
+      <button (click)="addPerson()">Add Person</button>
     </div>
   </div>
-  
-  <div class="card mb-4">
-    <div class="card-header bg-success text-white">
-      <h3>Add People</h3>
-    </div>
-    <div class="card-body">
-      <form (ngSubmit)="addPerson()" #personForm="ngForm">
-        <div class="mb-3">
-          <input [(ngModel)]="newPerson.name" name="personName" class="form-control" placeholder="Person name" required>
-        </div>
-        <h5>Items consumed:</h5>
-        <ul class="list-group mb-3">
-          <li *ngFor="let item of newPerson.items; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
-            {{item.name}} - {{item.quantity}} x {{item.price}}
-            <button type="button" class="btn btn-danger btn-sm" (click)="removeItemFromPerson(i)">Remove</button>
-          </li>
-        </ul>
-        <div class="mb-3">
-          <select (change)="addItemToPerson($event)" class="form-select">
-            <option value="">Select an item</option>
-            <option *ngFor="let item of billService.getBill().items" [value]="item.name">{{item.name}}</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-success w-100" [disabled]="!personForm.form.valid">Add Person</button>
-      </form>
-    </div>
-  </div>
-  
-  <div class="card mb-4">
-    <div class="card-header bg-warning text-dark">
-      <h3>Quick Add</h3>
-    </div>
-    <div class="card-body">
-      <div class="d-flex flex-wrap gap-2">
-        <button *ngFor="let item of billService.quickAddItems" (click)="quickAddItem(item)" class="btn btn-outline-primary">
-          {{item.name}}
-        </button>
-      </div>
-    </div>
-  </div>
-  
-  <button (click)="resetBill()" class="btn btn-danger w-100">Reset Bill</button>
