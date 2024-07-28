@@ -34,7 +34,7 @@
               "src/styles.css"
             ],
             "scripts": [],
-            "baseHref": "/bill-splitter/"
+            "baseHref": "/Bill-splitter-Oopar-Angular-Hackathon/"
           },
           "configurations": {
             "production": {
@@ -101,7 +101,7 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
-            "baseHref": "/bill-splitter/"
+            "baseHref": "/Bill-splitter-Oopar-Angular-Hackathon/"
           }
         }
       }
